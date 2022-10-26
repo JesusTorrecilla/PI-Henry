@@ -1,0 +1,41 @@
+.landing {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../images/864574.png");
+}
+
+.landing-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#welcome {
+  color: white;
+  font-size: 70px;
+}
+
+.startButton {
+  background-color: rgba(236, 56, 24, 0.998);
+  width: 8vw;
+  height: 5vh;
+  border-radius: 20px;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+}
+
+.startButton:hover {
+  background-color: rgb(255, 255, 255);
+  color: rgba(236, 56, 24, 0.998);
+}
+
+.link {
+  text-decoration: none;
+  margin: 10px;
+}
