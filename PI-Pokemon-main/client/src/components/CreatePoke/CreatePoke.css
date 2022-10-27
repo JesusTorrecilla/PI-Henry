@@ -1,9 +1,17 @@
+.bg {
+  margin: 0;
+  padding: 0;
+  background-image: url("../images/864574.png");
+  background-position: center;
+  background-size: cover;
+}
+
 .form {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-top: 3vh;
+  padding-top: 3vh;
 }
 
 #formContainer {
@@ -11,12 +19,62 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 45%;
+  width: 50%;
+  height: 1000px;
   border: 1px solid rgba(236, 56, 24, 0.998);
   border-radius: 20px;
+  background-color: rgba(237, 228, 217, 0.716);
 }
 
 .labels {
   margin: 1vh;
-  width: 45%;
+  width: 40%;
+  font-size: 25px;
+  position: relative;
+}
+.inputs {
+  height: 25px;
+  font-size: 25px;
+}
+
+.selects {
+  height: 30px;
+  font-size: 20px;
+}
+.danger {
+  position: absolute;
+  top: 52px;
+  font-size: 15px;
+  height: 10px;
+}
+
+#createButton {
+  background-color: rgba(236, 56, 24, 0.998);
+  width: 8vw;
+  height: 5vh;
+  border-radius: 20px;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+  margin-top: 25px;
+}
+
+#createButtonD {
+  background-color: rgba(51, 47, 46, 0.998);
+  width: 8vw;
+  height: 5vh;
+  border-radius: 20px;
+  font-size: 22px;
+  color: white;
+  margin-top: 25px;
+}
+#createButton:hover {
+  background-color: rgb(255, 255, 255);
+  color: rgba(236, 56, 24, 0.998);
+}
+
+#inputsName {
+  height: 25px;
+  font-size: 25px;
+  margin-bottom: 25px;
 }

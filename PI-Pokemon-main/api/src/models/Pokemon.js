@@ -15,7 +15,6 @@ module.exports = (sequelize) => {
         defaultValue: DataTypes.UUIDV4,
         unique: true,
         primaryKey: true,
-        allowNull: false,
       },
       hp: {
         type: DataTypes.INTEGER,

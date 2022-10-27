@@ -37,6 +37,8 @@ router.get("/pokemons", async function (req, res) {
     } catch (error) {
       res.status(404).send("No se encontraron Pokemon.");
     }
+    const pokemitosBase = await Pokemon.findAll();
+    arrayPokes = arrayPokes.concat(pokemitosBase);
 
     res.status(200).json(arrayPokes);
   } else {
@@ -77,18 +79,27 @@ router.get("/pokemons", async function (req, res) {
 router.get("/pokemons/:id", async function (req, res) {
   const { id } = req.params;
 
-  if (id.length > 4) {
-    const pokemito3 = await Pokemon.findAll({ where: { id: id } });
-    res.status(200).json({
-      name: pokemito3[0].name,
-      id: pokemito3[0].id,
-      hp: pokemito3[0].hp || "Not specified",
-      attack: pokemito3[0].attack || "Not specified",
-      defense: pokemito3[0].defense || "Not specified",
-      speed: pokemito3[0].speed || "Not specified",
-      height: pokemito3[0].height || "Not specified",
-      weight: pokemito3[0].weight || "Not specified",
-    });
+  if (id.length > 3) {
+    try {
+      const pokemito3 = await Pokemon.findAll({
+        where: { id: id },
+        include: Tipo,
+      });
+      res.status(200).json({
+        name: pokemito3[0].name,
+        id: pokemito3[0].id,
+        hp: pokemito3[0].hp || "Not specified",
+        attack: pokemito3[0].attack || "Not specified",
+        defense: pokemito3[0].defense || "Not specified",
+        speed: pokemito3[0].speed || "Not specified",
+        height: pokemito3[0].height || "Not specified",
+        weight: pokemito3[0].weight || "Not specified",
+        type1: pokemito3[0].tipos[0].name || "It has no type1",
+        type2: pokemito3[0].tipos[1].name || "It has no type2",
+      });
+    } catch (error) {
+      res.status(400).send("No existe el Pokemon");
+    }
   } else {
     try {
       const pokemito = await axios.get(
@@ -103,6 +114,8 @@ router.get("/pokemons/:id", async function (req, res) {
         speed: pokemito.data.stats[5].base_stat,
         height: pokemito.data.height,
         weight: pokemito.data.weight,
+        type1: pokemito.data.types[0].type.name,
+        type2: pokemito.data.types[1].type.name || "It has no second type",
       };
       res.status(200).json(poke);
     } catch (error) {
@@ -124,6 +137,7 @@ router.get("/types", async function (req, res) {
 });
 
 router.post("/pokemons", async function (req, res) {
+  /////TRAER LOS TIPOS ANTES O NO FUNCIONA
   const {
     id,
     name,
@@ -139,23 +153,23 @@ router.post("/pokemons", async function (req, res) {
 
   try {
     const newPoke = await Pokemon.create({
-      id,
       name,
-      hp,
-      attack,
-      defense,
-      speed,
-      height,
-      weight,
+      hp: hp || null,
+      attack: attack || null,
+      defense: defense || null,
+      speed: speed || null,
+      height: height || null,
+      weight: weight || null,
     });
-    await newPoke.addTipos([typesId1, typesId2]);
+
+    await newPoke.addTipos([Number(typesId1), Number(typesId2)]);
     const finalPoke = await Pokemon.findOne({
-      where: { id: id },
+      where: { name: name },
       include: Tipo,
     });
     res.status(200).json(finalPoke);
   } catch (error) {
-    res.status(400).send("Couldn't create the Pokemon.");
+    res.status(402).send("Couldn't create the Pokemon.");
   }
 });
 
