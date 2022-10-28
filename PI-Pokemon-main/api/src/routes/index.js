@@ -24,6 +24,9 @@ router.get("/pokemons", async function (req, res) {
           arrayPokes.push({
             id: pokemon.data.id,
             name: pokemons[index].name,
+            ////SI ALGO NO FUNCIONA SACAR
+            sprite:
+              pokemon.data.sprites.other["official-artwork"]["front_default"],
             hp: pokemon.data.stats[0].base_stat,
             attack: pokemon.data.stats[1].base_stat,
             defense: pokemon.data.stats[2].base_stat,
@@ -81,33 +84,38 @@ router.get("/pokemons/:id", async function (req, res) {
 
   if (id.length > 3) {
     try {
-      const pokemito3 = await Pokemon.findAll({
+      const pokemito3 = await Pokemon.findOne({
         where: { id: id },
         include: Tipo,
       });
+      console.log(pokemito3);
       res.status(200).json({
-        name: pokemito3[0].name,
-        id: pokemito3[0].id,
-        hp: pokemito3[0].hp || "Not specified",
-        attack: pokemito3[0].attack || "Not specified",
-        defense: pokemito3[0].defense || "Not specified",
-        speed: pokemito3[0].speed || "Not specified",
-        height: pokemito3[0].height || "Not specified",
-        weight: pokemito3[0].weight || "Not specified",
-        type1: pokemito3[0].tipos[0].name || "It has no type1",
-        type2: pokemito3[0].tipos[1].name || "It has no type2",
+        name: pokemito3.dataValues.name,
+        id: pokemito3.dataValues.id,
+        sprite: pokemito3.dataValues.sprite,
+        hp: pokemito3.dataValues.hp || "Not specified",
+        attack: pokemito3.dataValues.attack || "Not specified",
+        defense: pokemito3.dataValues.defense || "Not specified",
+        speed: pokemito3.dataValues.speed || "Not specified",
+        height: pokemito3.dataValues.height || "Not specified",
+        weight: pokemito3.dataValues.weight || "Not specified",
+        type1: pokemito3.dataValues.tipos[0].name,
+        type2: pokemito3.dataValues.tipos[1].name,
       });
     } catch (error) {
-      res.status(400).send("No existe el Pokemon");
+      res.status(400).send("No existe el Pokemon" + error);
     }
   } else {
     try {
       const pokemito = await axios.get(
         `https://pokeapi.co/api/v2/pokemon/${id}`
       );
+      console.log(pokemito.data);
       const poke = {
         id: pokemito.data.id,
         name: pokemito.data.forms[0].name,
+        sprite:
+          pokemito.data.sprites.other["official-artwork"]["front_default"],
         hp: pokemito.data.stats[0].base_stat,
         attack: pokemito.data.stats[1].base_stat,
         defense: pokemito.data.stats[2].base_stat,
@@ -115,7 +123,9 @@ router.get("/pokemons/:id", async function (req, res) {
         height: pokemito.data.height,
         weight: pokemito.data.weight,
         type1: pokemito.data.types[0].type.name,
-        type2: pokemito.data.types[1].type.name || "It has no second type",
+        type2: pokemito.data.types[1]
+          ? pokemito.data.types[1].type.name
+          : "It has no second type",
       };
       res.status(200).json(poke);
     } catch (error) {
@@ -151,15 +161,19 @@ router.post("/pokemons", async function (req, res) {
     typesId2,
   } = req.body;
 
+  if (typesId1 === typesId2) {
+    return res.status(404).send("The types must be different");
+  }
+
   try {
     const newPoke = await Pokemon.create({
       name,
-      hp: hp || null,
-      attack: attack || null,
-      defense: defense || null,
-      speed: speed || null,
-      height: height || null,
-      weight: weight || null,
+      hp: hp || 500,
+      attack: attack || 25,
+      defense: defense || 25,
+      speed: speed || 50,
+      height: height || 5,
+      weight: weight || 500,
     });
 
     await newPoke.addTipos([Number(typesId1), Number(typesId2)]);
@@ -167,8 +181,9 @@ router.post("/pokemons", async function (req, res) {
       where: { name: name },
       include: Tipo,
     });
-    res.status(200).json(finalPoke);
+    res.status(201).json("Pokemon creado");
   } catch (error) {
+    console.log(error);
     res.status(402).send("Couldn't create the Pokemon.");
   }
 });

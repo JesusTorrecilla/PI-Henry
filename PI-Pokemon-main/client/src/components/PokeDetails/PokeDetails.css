@@ -1,0 +1,45 @@
+.containerDetails {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 70vh;
+}
+
+.infoContainer {
+  width: 40%;
+}
+
+#imgContainer {
+  border: 2px solid grey;
+  border-radius: 20px;
+  width: 475px;
+}
+
+#detTitle {
+  display: flex;
+  justify-content: center;
+  text-transform: capitalize;
+}
+
+#idTag {
+  position: absolute;
+  bottom: 375px;
+  left: 10px;
+  font-size: 45px;
+  padding-bottom: 10px;
+}
+
+#detInfoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 18px;
+}
+
+#types {
+  text-transform: capitalize;
+}
+
+.imgContainer {
+  position: relative;
+}

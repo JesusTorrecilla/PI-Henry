@@ -1,8 +1,9 @@
 import React from "react";
 import Nav from "../Nav/Nav";
 import "./CreatePoke.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../redux/actions/index";
+import { useHistory } from "react-router-dom";
 
 export function validate(input) {
   let errors = {};
@@ -78,11 +79,18 @@ export function validate(input) {
     errors.weight = "Weight must be more than 0";
   }
 
+  if (Number(input.typesId1) === Number(input.typesId2)) {
+    errors.type = "The types must be different";
+  }
   return errors;
 }
 
 function CreatePoke(props) {
   let dispatch = useDispatch();
+
+  let history = useHistory();
+
+  let msg = useSelector((state) => state.msg);
 
   const [input, setInput] = React.useState({
     name: "",
@@ -130,21 +138,10 @@ function CreatePoke(props) {
             e.preventDefault();
             getTypes1();
             dispatchData(input);
+            setTimeout(() => history.push("/home"), 1000);
           }}
         >
           <div id="formContainer">
-            {/* <div className="labels">
-            <label>ID:</label>
-            <br></br>
-            <input
-              className={errors.id && "danger"}
-              type="text"
-              value={input.id}
-              name="id"
-              onChange={handleInputChange}
-            />
-            {errors.id && <p className="danger">{errors.id}</p>}
-          </div> */}
             <div className="labels">
               <label>Name:</label>
               <br></br>
@@ -288,6 +285,7 @@ function CreatePoke(props) {
                 <option value="10001">Unknown</option>
                 <option value="10002">Shadow</option>
               </select>
+              {errors.type && <p className="dangerSel">{errors.type}</p>}
             </div>
             <div>
               {!input.name ? (
@@ -304,7 +302,8 @@ function CreatePoke(props) {
                 errors.defense ||
                 errors.speed ||
                 errors.height ||
-                errors.weight ? (
+                errors.weight ||
+                errors.type ? (
                 <input
                   type="submit"
                   id="createButtonD"
@@ -321,6 +320,7 @@ function CreatePoke(props) {
                 />
               )}
             </div>
+            {msg.length ? <h3 id="successMsg">{msg}</h3> : null}
           </div>
         </form>
       </div>

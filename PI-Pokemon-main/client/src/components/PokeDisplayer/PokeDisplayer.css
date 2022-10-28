@@ -1,0 +1,16 @@
+#buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.buttonsBot {
+  background-color: rgba(236, 56, 24, 0.998);
+  width: 7vw;
+  height: 4vh;
+  border-radius: 20px;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+  margin-top: 25px;
+  margin: 25px 5px 25px 5px;
+}

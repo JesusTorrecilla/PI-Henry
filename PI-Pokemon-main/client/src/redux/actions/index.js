@@ -5,6 +5,7 @@ export const GET_POKEMON_BY_ID = "GET_POKEMON_BY_ID";
 export const GET_POKEMON_BY_NAME = "GET_POKEMON_BY_NAME";
 export const CREATE_POKEMON = "CREATE_POKEMON";
 export const GET_TYPES = "GET_TYPES";
+export const CLEAN_MSG = "CLEAN_MSG";
 
 export const getAllPokemon = () => {
   return async function (dispatch) {
@@ -42,3 +43,5 @@ export const createPokemon = (poke) => {
     return dispatch({ type: CREATE_POKEMON, payload: pokemon.data });
   };
 };
+
+export const cleanMsg = () => ({ type: CLEAN_MSG });

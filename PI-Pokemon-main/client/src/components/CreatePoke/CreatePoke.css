@@ -15,6 +15,7 @@
 }
 
 #formContainer {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,6 +49,13 @@
   height: 10px;
 }
 
+.dangerSel {
+  position: absolute;
+  top: 28px;
+  font-size: 15px;
+  height: 10px;
+}
+
 #createButton {
   background-color: rgba(236, 56, 24, 0.998);
   width: 8vw;
@@ -77,4 +85,14 @@
   height: 25px;
   font-size: 25px;
   margin-bottom: 25px;
+}
+
+#successMsg {
+  position: absolute;
+  background-color: white;
+  padding: 60px;
+  font-size: 30px;
+  border: 3px solid rgba(236, 56, 24, 0.998);
+  border-radius: 20px;
+  color: rgb(10, 249, 10);
 }

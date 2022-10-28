@@ -4,12 +4,14 @@ import {
   GET_POKEMON_BY_NAME,
   CREATE_POKEMON,
   GET_TYPES,
+  CLEAN_MSG,
 } from "../actions/index.js";
 
 const initialState = {
   pokemon: [],
   pokemonDetail: {},
   types: [],
+  msg: "",
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -38,7 +40,12 @@ const rootReducer = (state = initialState, action) => {
     case CREATE_POKEMON:
       return {
         ...state,
-        pokemon: state.pokemon.concat(action.payload),
+        msg: action.payload,
+      };
+    case CLEAN_MSG:
+      return {
+        ...state,
+        msg: "",
       };
     default:
       return state;

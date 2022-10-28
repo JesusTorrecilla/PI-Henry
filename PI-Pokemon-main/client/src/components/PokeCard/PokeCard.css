@@ -1,0 +1,33 @@
+.pokeCard {
+  height: 43vh;
+  width: 20vw;
+  border: 2px solid red;
+  border-radius: 20px;
+  margin: 30px;
+  display: inline-block;
+}
+
+.imgPoke {
+  display: block;
+  width: 50%;
+  margin: auto;
+}
+
+#link {
+  text-decoration: none;
+}
+
+#pokeName {
+  text-align: center;
+  text-transform: capitalize;
+  font-size: 18px;
+  color: rgba(236, 56, 24, 0.998);
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  text-decoration: none;
+  color: rgba(236, 56, 24, 0.998);
+  padding-bottom: 1vh;
+}

@@ -10,7 +10,7 @@ function App() {
     <>
       <Route exact path="/" component={Landing}></Route>
       <Route exact path="/home" component={Home}></Route>
-      <Route path="/details/:id" component={PokeDetails}></Route>
+      <Route path="/pokemon/details/:id" component={PokeDetails}></Route>
       <Route exact path="/create" component={CreatePoke}></Route>
     </>
   );

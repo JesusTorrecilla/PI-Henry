@@ -16,23 +16,34 @@ module.exports = (sequelize) => {
         unique: true,
         primaryKey: true,
       },
+      sprite: {
+        type: DataTypes.STRING,
+        defaultValue:
+          "https://cdn.discordapp.com/emojis/891059618208444437.webp?size=96&quality=lossless",
+      },
       hp: {
         type: DataTypes.INTEGER,
+        defaultValue: 500,
       },
       attack: {
         type: DataTypes.INTEGER,
+        defaultValue: 25,
       },
       defense: {
         type: DataTypes.INTEGER,
+        defaultValue: 25,
       },
       speed: {
         type: DataTypes.INTEGER,
+        defaultValue: 50,
       },
       height: {
         type: DataTypes.FLOAT,
+        defaultValue: 5,
       },
       weight: {
         type: DataTypes.INTEGER,
+        defaultValue: 500,
       },
     },
     { timestamps: false }
