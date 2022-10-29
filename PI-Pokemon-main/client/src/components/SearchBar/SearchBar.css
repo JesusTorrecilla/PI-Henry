@@ -1,0 +1,30 @@
+#sbContainer {
+  height: 5vh;
+  display: flex;
+  justify-content: center;
+}
+
+#searchBar {
+  width: 40%;
+  font-size: 25px;
+  margin-top: 5px;
+}
+
+#searchButton {
+  background-color: rgba(236, 56, 24, 0.998);
+  width: 10vw;
+  height: 5vh;
+  border-radius: 10px;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.filters {
+  margin-top: 7px;
+  margin-left: 5px;
+  height: 45px;
+  font-size: 20px;
+  border-radius: 10px;
+}

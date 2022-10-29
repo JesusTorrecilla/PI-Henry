@@ -24,6 +24,10 @@
   color: rgba(236, 56, 24, 0.998);
 }
 
+#typesCap {
+  text-transform: capitalize;
+}
+
 .stats {
   display: flex;
   justify-content: space-around;

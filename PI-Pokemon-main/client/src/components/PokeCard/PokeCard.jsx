@@ -17,9 +17,11 @@ function PokeCard(props) {
             <p>Defense: {props.defense}</p>
           </div>
           <div className="statsRight">
-            <p>Speed: {props.speed}</p>
             <p>Height: {props.height}</p>
             <p>Weight: {props.weight}</p>
+            <p id="typesCap">
+              Types: {props.type1} {props.type2}
+            </p>
           </div>
         </div>
       </Link>

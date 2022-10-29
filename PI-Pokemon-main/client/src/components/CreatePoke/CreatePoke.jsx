@@ -138,7 +138,7 @@ function CreatePoke(props) {
             e.preventDefault();
             getTypes1();
             dispatchData(input);
-            setTimeout(() => history.push("/home"), 1000);
+            setTimeout(() => history.push("/home"), 3000);
           }}
         >
           <div id="formContainer">

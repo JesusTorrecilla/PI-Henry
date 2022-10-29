@@ -33,14 +33,24 @@ router.get("/pokemons", async function (req, res) {
             speed: pokemon.data.stats[5].base_stat,
             height: pokemon.data.height,
             weight: pokemon.data.weight,
+            tipos: [
+              { name: pokemon.data.types[0].type.name },
+              {
+                name: pokemon.data.types[1]
+                  ? pokemon.data.types[1].type.name
+                  : "",
+              },
+            ],
           });
         }
         url = a.data.next;
+
+        ///{pokemon.data.types[1] ? pokemon.data.types[1].type.name : ""}
       }
     } catch (error) {
       res.status(404).send("No se encontraron Pokemon.");
     }
-    const pokemitosBase = await Pokemon.findAll();
+    const pokemitosBase = await Pokemon.findAll({ include: Tipo });
     arrayPokes = arrayPokes.concat(pokemitosBase);
 
     res.status(200).json(arrayPokes);
@@ -52,28 +62,46 @@ router.get("/pokemons", async function (req, res) {
       res.status(200).json({
         id: pokemito2.data.id,
         name: pokemito2.data.forms[0].name,
+        sprite:
+          pokemito2.data.sprites.other["official-artwork"]["front_default"],
         hp: pokemito2.data.stats[0].base_stat,
         attack: pokemito2.data.stats[1].base_stat,
         defense: pokemito2.data.stats[2].base_stat,
         speed: pokemito2.data.stats[5].base_stat,
         height: pokemito2.data.height,
         weight: pokemito2.data.weight,
+        tipos: [
+          { name: pokemito2.data.types[0].type.name },
+          {
+            name: pokemito2.data.types[1]
+              ? pokemito2.data.types[1].type.name
+              : "",
+          },
+        ],
       });
     } catch (error) {
       try {
-        const pokemito3 = await Pokemon.findAll({ where: { name: name } });
+        const pokemito3 = await Pokemon.findAll({
+          where: { name: name },
+          include: Tipo,
+        });
         res.status(200).json({
-          name: pokemito3[0].name,
-          id: pokemito3[0].id,
-          hp: pokemito3[0].hp || "Not specified",
-          attack: pokemito3[0].attack || "Not specified",
-          defense: pokemito3[0].defense || "Not specified",
-          speed: pokemito3[0].speed || "Not specified",
-          height: pokemito3[0].height || "Not specified",
-          weight: pokemito3[0].weight || "Not specified",
+          name: pokemito3[0].dataValues.name,
+          sprite: pokemito3[0].dataValues.sprite,
+          id: pokemito3[0].dataValues.id,
+          hp: pokemito3[0].dataValues.hp || "Not specified",
+          attack: pokemito3[0].dataValues.attack || "Not specified",
+          defense: pokemito3[0].dataValues.defense || "Not specified",
+          speed: pokemito3[0].dataValues.speed || "Not specified",
+          height: pokemito3[0].dataValues.height || "Not specified",
+          weight: pokemito3[0].dataValues.weight || "Not specified",
+          tipos: [
+            { name: pokemito3[0].dataValues.tipos[0].name },
+            { name: pokemito3[0].dataValues.tipos[1].name },
+          ],
         });
       } catch (error) {
-        res.status(404).send("Pokemon not found.");
+        res.status(404).send("Pokemon not found");
       }
     }
   }
@@ -123,9 +151,7 @@ router.get("/pokemons/:id", async function (req, res) {
         height: pokemito.data.height,
         weight: pokemito.data.weight,
         type1: pokemito.data.types[0].type.name,
-        type2: pokemito.data.types[1]
-          ? pokemito.data.types[1].type.name
-          : "It has no second type",
+        type2: pokemito.data.types[1] ? pokemito.data.types[1].type.name : "",
       };
       res.status(200).json(poke);
     } catch (error) {
@@ -161,13 +187,23 @@ router.post("/pokemons", async function (req, res) {
     typesId2,
   } = req.body;
 
+  if (!name) {
+    return res.status(404).send("You must be send a name");
+  }
+
+  let found = await Pokemon.findAll({ where: { name: name.toLowerCase() } });
+
+  if (found.length > 0) {
+    return res.status(400).json("The Pokemon already exists.");
+  }
+
   if (typesId1 === typesId2) {
     return res.status(404).send("The types must be different");
   }
 
   try {
     const newPoke = await Pokemon.create({
-      name,
+      name: name.toLowerCase(),
       hp: hp || 500,
       attack: attack || 25,
       defense: defense || 25,
@@ -181,7 +217,7 @@ router.post("/pokemons", async function (req, res) {
       where: { name: name },
       include: Tipo,
     });
-    res.status(201).json("Pokemon creado");
+    res.status(201).json("Pokemon created");
   } catch (error) {
     console.log(error);
     res.status(402).send("Couldn't create the Pokemon.");

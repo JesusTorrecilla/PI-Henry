@@ -6,6 +6,11 @@ export const GET_POKEMON_BY_NAME = "GET_POKEMON_BY_NAME";
 export const CREATE_POKEMON = "CREATE_POKEMON";
 export const GET_TYPES = "GET_TYPES";
 export const CLEAN_MSG = "CLEAN_MSG";
+export const CLEAR_POKEMON = "CLEAR_POKEMON";
+export const CHANGE_MSG = "CHANGE_MSG";
+export const CLEAN_DETAIL = "CLEAN_DETAIL";
+export const FILTER1 = "FILTER1";
+export const FILTER2 = "FILTER2";
 
 export const getAllPokemon = () => {
   return async function (dispatch) {
@@ -23,10 +28,20 @@ export const getPokemonById = (id) => {
 
 export const getPokemonByName = (name) => {
   return async function (dispatch) {
-    const pokemon = await axios.get(
-      `http://localhost:3001/pokemons/?name=${name}`
-    );
-    return dispatch({ type: GET_POKEMON_BY_NAME, payload: pokemon.data });
+    if (name === "") {
+      const pokemon = await axios.get("http://localhost:3001/pokemons");
+      return dispatch({ type: GET_ALL_POKEMON, payload: pokemon.data });
+    }
+
+    try {
+      const pokemon = await axios.get(
+        `http://localhost:3001/pokemons/?name=${name}`
+      );
+      return dispatch({ type: GET_POKEMON_BY_NAME, payload: pokemon.data });
+    } catch (error) {
+      console.log(error.response.data);
+      return dispatch({ type: CLEAR_POKEMON, payload: error.response.data });
+    }
   };
 };
 
@@ -39,9 +54,19 @@ export const getTypes = () => {
 
 export const createPokemon = (poke) => {
   return async function (dispatch) {
-    const pokemon = await axios.post("http://localhost:3001/pokemons", poke);
-    return dispatch({ type: CREATE_POKEMON, payload: pokemon.data });
+    try {
+      const pokemon = await axios.post("http://localhost:3001/pokemons", poke);
+      return dispatch({ type: CREATE_POKEMON, payload: pokemon.data });
+    } catch (error) {
+      return dispatch({ type: CHANGE_MSG, payload: error.response.data });
+    }
   };
 };
 
 export const cleanMsg = () => ({ type: CLEAN_MSG });
+
+export const cleanDetail = () => ({ type: CLEAN_DETAIL });
+
+export const filterByType1 = (type1) => ({ type: FILTER1, payload: type1 });
+
+export const filterByType2 = (type2) => ({ type: FILTER2, payload: type2 });

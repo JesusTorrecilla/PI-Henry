@@ -7,6 +7,7 @@ import "./PokeDisplayer.css";
 function PokeDisplayer(props) {
   let dispatch = useDispatch();
   let pokemon = useSelector((state) => state.pokemon);
+  let errorMsg = useSelector((state) => state.errorMsg);
   const [value, setValue] = React.useState({ value1: 0, value2: 12 });
 
   React.useEffect(() => {
@@ -46,17 +47,29 @@ function PokeDisplayer(props) {
               speed={pokemon.speed}
               height={pokemon.height}
               weight={pokemon.weight}
+              type1={pokemon.tipos[0].name}
+              type2={pokemon.tipos ? pokemon.tipos[1].name : ""}
             ></PokeCard>
           );
         })}
-      <div id="buttons">
-        <button className="buttonsBot" onClick={handlePrev}>
-          Prev
-        </button>
-        <button className="buttonsBot" onClick={handleNext}>
-          Next
-        </button>
-      </div>
+      {errorMsg.length > 0 ? (
+        <div id="loadingContainer">
+          <p id="loadingText">Pokemon not Found</p>
+        </div>
+      ) : pokemon.length === 0 ? (
+        <div id="loadingContainer">
+          <p id="loadingText">Loading...</p>
+        </div>
+      ) : (
+        <div id="buttons">
+          <button className="buttonsBot" onClick={handlePrev}>
+            Prev
+          </button>
+          <button className="buttonsBot" onClick={handleNext}>
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 }

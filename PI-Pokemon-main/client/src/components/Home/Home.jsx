@@ -12,6 +12,7 @@ function Home(props) {
 
   React.useEffect(() => {
     dispatch(actions.cleanMsg());
+    dispatch(actions.cleanDetail());
   }, []);
 
   return (

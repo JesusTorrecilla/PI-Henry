@@ -14,3 +14,14 @@
   margin-top: 25px;
   margin: 25px 5px 25px 5px;
 }
+
+#loadingText {
+  color: rgba(236, 56, 24, 0.998);
+  font-size: 70px;
+  font-weight: bold;
+}
+
+#loadingContainer {
+  display: flex;
+  justify-content: center;
+}
