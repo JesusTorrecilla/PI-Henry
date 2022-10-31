@@ -21,7 +21,11 @@ function PokeDetails(props) {
       <div className="containerDetails">
         <div className="imgContainer">
           <img src={detail.sprite} alt={detail.name} id="imgContainer"></img>
-          <h2 id="idTag">#{detail.id}</h2>
+          {String(detail.id).length < 5 ? (
+            <h2 id="idTag">#{detail.id}</h2>
+          ) : (
+            <h2 id="idTag">User created</h2>
+          )}
         </div>
         <div className="infoContainer">
           <div id="detInfoContainer">

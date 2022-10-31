@@ -21,32 +21,28 @@ function SearchBar(props) {
 
   const handleSelect1 = function (e) {
     e.preventDefault();
-    setSelect1(e.target.value);
-    dispatch(actions.filterByType1(select1));
+    dispatch(actions.filterByType1(e.target.value));
   };
 
   const handleSelect2 = function (e) {
     e.preventDefault();
-    setSelect2(e.target.value);
-    dispatch(actions.filterByType2(select2));
+    dispatch(actions.filterByType2(e.target.value));
   };
 
   const handleAttack = function (e) {
     e.preventDefault();
-    setAttack(e.target.value);
-    dispatch(actions.sortByAttack(attack));
+    // setAttack(e.target.value);
+    dispatch(actions.sortByAttack(e.target.value));
   };
 
   const handleName = function (e) {
     e.preventDefault();
-    setName(e.target.value);
-    dispatch(actions.sortByName(name));
+    dispatch(actions.sortByName(e.target.value));
   };
 
   const handleProcedence = function (e) {
     e.preventDefault();
-    setProcedence(e.target.value);
-    dispatch(actions.filterByProcedence(procedence));
+    dispatch(actions.filterByProcedence(e.target.value));
   };
 
   return (
