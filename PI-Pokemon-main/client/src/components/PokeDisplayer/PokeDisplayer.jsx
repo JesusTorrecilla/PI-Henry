@@ -25,52 +25,54 @@ function PokeDisplayer(props) {
 
   let handlePrev = () => {
     let val1 = value1 <= 0 ? pokemon.length - 12 : value1 - 12;
-    const val2 = value2 <= 12 ? pokemon.length : value2 - 12;
+    let val2 = value2 <= 12 ? pokemon.length : value2 - 12;
     // Si val1 es igual o menor a 0 lo igual a 0 para que no me deje pantalla en blanco porque si no slice no sabe que cortar
     if (val1 <= 0) val1 = 0;
     setValue({ ...value, value1: val1, value2: val2 });
   };
 
   return (
-    <div>
-      {pokemon &&
-        pokemon.slice(value1, value2).map((pokemon) => {
-          return (
-            <PokeCard
-              key={pokemon.id}
-              id={pokemon.id}
-              name={pokemon.name}
-              sprite={pokemon.sprite}
-              hp={pokemon.hp}
-              attack={pokemon.attack}
-              defense={pokemon.defense}
-              speed={pokemon.speed}
-              height={pokemon.height}
-              weight={pokemon.weight}
-              type1={pokemon.tipos[0].name}
-              type2={pokemon.tipos ? pokemon.tipos[1].name : ""}
-            ></PokeCard>
-          );
-        })}
-      {errorMsg.length > 0 ? (
-        <div id="loadingContainer">
-          <p id="loadingText">Pokemon not Found</p>
-        </div>
-      ) : pokemon.length === 0 ? (
-        <div id="loadingContainer">
-          <p id="loadingText">Loading...</p>
-        </div>
-      ) : (
-        <div id="buttons">
-          <button className="buttonsBot" onClick={handlePrev}>
-            Prev
-          </button>
-          <button className="buttonsBot" onClick={handleNext}>
-            Next
-          </button>
-        </div>
-      )}
-    </div>
+    <>
+      <div>
+        {pokemon &&
+          pokemon.slice(value1, value2).map((pokemon) => {
+            return (
+              <PokeCard
+                key={pokemon.id}
+                id={pokemon.id}
+                name={pokemon.name}
+                sprite={pokemon.sprite}
+                hp={pokemon.hp}
+                attack={pokemon.attack}
+                defense={pokemon.defense}
+                speed={pokemon.speed}
+                height={pokemon.height}
+                weight={pokemon.weight}
+                type1={pokemon.tipos[0].name}
+                type2={pokemon.tipos ? pokemon.tipos[1].name : ""}
+              ></PokeCard>
+            );
+          })}
+        {errorMsg.length > 0 ? (
+          <div id="loadingContainer">
+            <p id="loadingText">Pokemon not Found</p>
+          </div>
+        ) : pokemon.length === 0 ? (
+          <div id="loadingContainer">
+            <p id="loadingText">Loading...</p>
+          </div>
+        ) : (
+          <div id="buttons">
+            <button className="buttonsBot" onClick={handlePrev}>
+              Prev
+            </button>
+            <button className="buttonsBot" onClick={handleNext}>
+              Next
+            </button>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 

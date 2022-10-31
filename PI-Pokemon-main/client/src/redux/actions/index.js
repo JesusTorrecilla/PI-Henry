@@ -11,6 +11,9 @@ export const CHANGE_MSG = "CHANGE_MSG";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
 export const FILTER1 = "FILTER1";
 export const FILTER2 = "FILTER2";
+export const FILTER_BY_PROCEDENCE = "FILTER_BY_PROCEDENCE";
+export const SORT_BY_ATTACK = "SORT_BY_ATTACK";
+export const SORT_BY_NAME = "SORT_BY_NAME";
 
 export const getAllPokemon = () => {
   return async function (dispatch) {
@@ -70,3 +73,18 @@ export const cleanDetail = () => ({ type: CLEAN_DETAIL });
 export const filterByType1 = (type1) => ({ type: FILTER1, payload: type1 });
 
 export const filterByType2 = (type2) => ({ type: FILTER2, payload: type2 });
+
+export const sortByAttack = (sa) => ({
+  type: SORT_BY_ATTACK,
+  payload: sa,
+});
+
+export const sortByName = (sn) => ({
+  type: SORT_BY_NAME,
+  payload: sn,
+});
+
+export const filterByProcedence = (proc) => ({
+  type: FILTER_BY_PROCEDENCE,
+  payload: proc,
+});

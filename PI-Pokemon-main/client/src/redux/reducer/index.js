@@ -9,6 +9,10 @@ import {
   CHANGE_MSG,
   CLEAN_DETAIL,
   FILTER1,
+  FILTER2,
+  FILTER_BY_PROCEDENCE,
+  SORT_BY_ATTACK,
+  SORT_BY_NAME,
 } from "../actions/index.js";
 
 const initialState = {
@@ -72,18 +76,83 @@ const rootReducer = (state = initialState, action) => {
       };
     case FILTER1:
       const defaultPoke = state.pokemon;
+      console.log(defaultPoke, action.payload);
       const filtered =
         action.payload === "none"
           ? defaultPoke
           : defaultPoke.filter((pokemon) => {
-              if (pokemon.tipos.find((a) => a === action.payload)) {
-                return pokemon;
-              }
+              return (
+                pokemon.tipos[0].name === action.payload ||
+                pokemon.tipos[1].name === action.payload
+              );
             });
       console.log(filtered);
       return {
         ...state,
         pokemon: filtered,
+      };
+    case FILTER2:
+      const defaultPoke2 = state.pokemon;
+      console.log(defaultPoke2, action.payload);
+      const filtered2 =
+        action.payload === "none"
+          ? defaultPoke2
+          : defaultPoke2.filter((pokemon) => {
+              return (
+                pokemon.tipos[0].name === action.payload ||
+                pokemon.tipos[1].name === action.payload
+              );
+            });
+      console.log(filtered2);
+      return {
+        ...state,
+        pokemon: filtered2,
+      };
+    case SORT_BY_ATTACK:
+      const defaultPoke3 = state.pokemon;
+      const sortByAttack =
+        action.payload === "none"
+          ? defaultPoke3
+          : action.payload === "asc1"
+          ? defaultPoke3.sort(function (a, b) {
+              return b.attack - a.attack;
+            })
+          : action.payload === "desc2"
+          ? defaultPoke3.sort(function (a, b) {
+              return a.attack - b.attack;
+            })
+          : null;
+      return {
+        ...state,
+        pokemon: sortByAttack,
+      };
+    case SORT_BY_NAME:
+      const defaultPoke4 = state.pokemon;
+      const sortByName =
+        action.payload === "none"
+          ? defaultPoke4
+          : action.payload === "asc"
+          ? defaultPoke4.sort((a, b) => a.name.localeCompare(b.name))
+          : action.payload === "desc"
+          ? defaultPoke4.sort((a, b) => b.name.localeCompare(a.name))
+          : null;
+      return {
+        ...state,
+        pokemon: sortByName,
+      };
+    case FILTER_BY_PROCEDENCE:
+      const defaultPoke5 = state.pokemon;
+      const filterByProc =
+        action.payload === "all"
+          ? defaultPoke5
+          : action.payload === "api"
+          ? defaultPoke5.filter((poke) => poke.created === "api")
+          : action.payload === "database"
+          ? defaultPoke5.filter((poke) => poke.created === "db")
+          : null;
+      return {
+        ...state,
+        pokemon: filterByProc,
       };
     default:
       return state;

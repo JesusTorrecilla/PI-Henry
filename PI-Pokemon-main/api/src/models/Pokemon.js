@@ -45,6 +45,10 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         defaultValue: 500,
       },
+      created: {
+        type: DataTypes.STRING,
+        defaultValue: "db",
+      },
     },
     { timestamps: false }
   );

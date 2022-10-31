@@ -33,6 +33,7 @@ router.get("/pokemons", async function (req, res) {
             speed: pokemon.data.stats[5].base_stat,
             height: pokemon.data.height,
             weight: pokemon.data.weight,
+            created: "api",
             tipos: [
               { name: pokemon.data.types[0].type.name },
               {
