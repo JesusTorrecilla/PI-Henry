@@ -129,7 +129,9 @@ router.get("/pokemons/:id", async function (req, res) {
         height: pokemito3.dataValues.height || "Not specified",
         weight: pokemito3.dataValues.weight || "Not specified",
         type1: pokemito3.dataValues.tipos[0].name,
-        type2: pokemito3.dataValues.tipos[1].name,
+        type2: pokemito3.dataValues.tipos[1]
+          ? pokemito3.dataValues.tipos[1].name
+          : "",
       });
     } catch (error) {
       res.status(400).send("No existe el Pokemon" + error);

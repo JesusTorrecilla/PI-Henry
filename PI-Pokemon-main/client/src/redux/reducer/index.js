@@ -76,6 +76,7 @@ const rootReducer = (state = initialState, action) => {
       };
     case FILTER1:
       const defaultPoke = state.pokemon;
+      let message = "";
       console.log(defaultPoke, action.payload);
       const filtered =
         action.payload === "none"
@@ -90,13 +91,18 @@ const rootReducer = (state = initialState, action) => {
                 return pokemon.tipos[0].name === action.payload;
               }
             });
+      if (filtered.length < 1) {
+        message = "Pokemon not Found";
+      }
       console.log(filtered);
       return {
         ...state,
         pokemon: filtered,
+        errorMsg: message,
       };
     case FILTER2:
       const defaultPoke2 = state.pokemon;
+      let message2 = "";
       console.log(defaultPoke2, action.payload);
       const filtered2 =
         action.payload === "none"
@@ -112,9 +118,13 @@ const rootReducer = (state = initialState, action) => {
               }
             });
       console.log(filtered2);
+      if (filtered2.length < 1) {
+        message2 = "Pokemon not Found";
+      }
       return {
         ...state,
         pokemon: filtered2,
+        errorMsg: message2,
       };
     case SORT_BY_ATTACK:
       const defaultPoke3 = state.pokemon;
