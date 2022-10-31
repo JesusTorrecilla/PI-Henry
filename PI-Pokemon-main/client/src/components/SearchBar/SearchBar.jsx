@@ -19,10 +19,14 @@ function SearchBar(props) {
     setInputSB(e.target.value);
   };
 
-  const handleSelect1 = function (e) {
-    e.preventDefault();
-    dispatch(actions.filterByType1(e.target.value));
-  };
+  React.useEffect(() => {
+    dispatch(actions.filterByType1(select1, select2));
+  }, [select1, select2]);
+
+  // const handleSelect1 = function (e) {
+  //   console.log(e.target.value);
+  //   dispatch(actions.filterByType1([select1, select2]));
+  // };
 
   const handleSelect2 = function (e) {
     e.preventDefault();
@@ -63,7 +67,14 @@ function SearchBar(props) {
       >
         Search
       </button>
-      <select className="filters" name="type1" onChange={handleSelect1}>
+      <select
+        className="filters"
+        name="type1"
+        onChange={(e) => {
+          setSelect1(e.target.value);
+          // handleSelect1(e);
+        }}
+      >
         <option value="none">Filter by Type1</option>
         <option value="normal">Normal</option>
         <option value="fighting">Fighting</option>
@@ -86,7 +97,14 @@ function SearchBar(props) {
         <option value="unknown">Unknown</option>
         <option value="shadow">Shadow</option>
       </select>
-      <select className="filters" name="type2" onChange={handleSelect2}>
+      <select
+        className="filters"
+        name="type2"
+        onChange={(e) => {
+          setSelect2(e.target.value);
+          // handleSelect1();
+        }}
+      >
         <option value="none">Filter by Type2</option>
         <option value="normal">Normal</option>
         <option value="fighting">Fighting</option>

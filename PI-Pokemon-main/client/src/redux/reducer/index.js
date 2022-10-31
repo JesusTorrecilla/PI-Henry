@@ -17,6 +17,7 @@ import {
 
 const initialState = {
   pokemon: [],
+  allPokemon: [],
   pokemonDetail: {},
   types: [],
   msg: "",
@@ -36,6 +37,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         errorMsg: "",
         pokemon: action.payload,
+        allPokemon: action.payload,
       };
     case GET_POKEMON_BY_ID:
       return {
@@ -75,29 +77,56 @@ const rootReducer = (state = initialState, action) => {
         msg: action.payload,
       };
     case FILTER1:
-      const defaultPoke = state.pokemon;
+      const defaultPoke = state.allPokemon;
       let message = "";
-      console.log(defaultPoke, action.payload);
-      const filtered =
-        action.payload === "none"
-          ? defaultPoke
-          : defaultPoke.filter((pokemon) => {
-              if (pokemon.tipos[1]) {
-                return (
-                  pokemon.tipos[0].name === action.payload ||
-                  pokemon.tipos[1].name === action.payload
-                );
-              } else {
-                return pokemon.tipos[0].name === action.payload;
-              }
-            });
-      if (filtered.length < 1) {
+
+      let filtered = [];
+      let pay = action.payload;
+      console.log(pay[0], pay[1]);
+
+      let filt1 = defaultPoke.filter((pokemon) => {
+        if (pay[0] === "none") return defaultPoke;
+        if (pokemon.tipos[1]) {
+          return (
+            pokemon.tipos[0].name === pay[0] || pokemon.tipos[1].name === pay[0]
+          );
+        } else {
+          return pokemon.tipos[0].name === pay[0];
+        }
+      });
+
+      let filt2 = filt1.filter((pokemon) => {
+        if (pay[0] === "none" && pay[1] === "none") return defaultPoke;
+        if (pay[1] === "none") return filt1;
+        if (pokemon.tipos[1]) {
+          return (
+            pokemon.tipos[0].name === pay[1] || pokemon.tipos[1].name === pay[1]
+          );
+        } else {
+          return pokemon.tipos[0].name === pay[0];
+        }
+      });
+      console.log(filt2);
+
+      // const filtered =
+      //   action.payload === "none"
+      //     ? defaultPoke
+      //     : defaultPoke.filter((pokemon) => {
+      //         if (pokemon.tipos[1]) {
+      //           return (
+      //             pokemon.tipos[0].name === action.payload ||
+      //             pokemon.tipos[1].name === action.payload
+      //           );
+      //         } else {
+      //           return pokemon.tipos[0].name === action.payload;
+      //         }
+      //       });
+      if (filt2.length < 1) {
         message = "Pokemon not Found";
       }
-      console.log(filtered);
       return {
         ...state,
-        pokemon: filtered,
+        pokemon: filt2,
         errorMsg: message,
       };
     case FILTER2:
@@ -162,7 +191,7 @@ const rootReducer = (state = initialState, action) => {
       const defaultPoke5 = state.pokemon;
       const filterByProc =
         action.payload === "all"
-          ? defaultPoke5
+          ? state.allPokemon
           : action.payload === "api"
           ? defaultPoke5.filter((poke) => poke.created === "api")
           : action.payload === "database"
