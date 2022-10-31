@@ -81,10 +81,14 @@ const rootReducer = (state = initialState, action) => {
         action.payload === "none"
           ? defaultPoke
           : defaultPoke.filter((pokemon) => {
-              return (
-                pokemon.tipos[0].name === action.payload ||
-                pokemon.tipos[1].name === action.payload
-              );
+              if (pokemon.tipos[1]) {
+                return (
+                  pokemon.tipos[0].name === action.payload ||
+                  pokemon.tipos[1].name === action.payload
+                );
+              } else {
+                return pokemon.tipos[0].name === action.payload;
+              }
             });
       console.log(filtered);
       return {
@@ -98,10 +102,14 @@ const rootReducer = (state = initialState, action) => {
         action.payload === "none"
           ? defaultPoke2
           : defaultPoke2.filter((pokemon) => {
-              return (
-                pokemon.tipos[0].name === action.payload ||
-                pokemon.tipos[1].name === action.payload
-              );
+              if (pokemon.tipos[1]) {
+                return (
+                  pokemon.tipos[0].name === action.payload ||
+                  pokemon.tipos[1].name === action.payload
+                );
+              } else {
+                return pokemon.tipos[0].name === action.payload;
+              }
             });
       console.log(filtered2);
       return {

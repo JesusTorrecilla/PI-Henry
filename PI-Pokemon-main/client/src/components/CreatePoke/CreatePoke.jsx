@@ -264,6 +264,7 @@ function CreatePoke(props) {
                 value={input.typesId2}
                 onChange={handleInputChange}
               >
+                <option value="0">------------</option>
                 <option value="1">Normal</option>
                 <option value="2">Fighting</option>
                 <option value="3">Flying</option>

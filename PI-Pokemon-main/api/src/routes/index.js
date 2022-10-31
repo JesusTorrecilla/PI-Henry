@@ -213,7 +213,11 @@ router.post("/pokemons", async function (req, res) {
       weight: weight || 500,
     });
 
-    await newPoke.addTipos([Number(typesId1), Number(typesId2)]);
+    if (typesId2 === "0") {
+      await newPoke.addTipos([Number(typesId1)]);
+    } else {
+      await newPoke.addTipos([Number(typesId1), Number(typesId2)]);
+    }
     const finalPoke = await Pokemon.findOne({
       where: { name: name },
       include: Tipo,

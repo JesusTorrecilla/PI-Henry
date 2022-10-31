@@ -49,7 +49,9 @@ function PokeDisplayer(props) {
                 height={pokemon.height}
                 weight={pokemon.weight}
                 type1={pokemon.tipos[0].name}
-                type2={pokemon.tipos ? pokemon.tipos[1].name : ""}
+                type2={
+                  pokemon.tipos && pokemon.tipos[1] ? pokemon.tipos[1].name : ""
+                }
               ></PokeCard>
             );
           })}
