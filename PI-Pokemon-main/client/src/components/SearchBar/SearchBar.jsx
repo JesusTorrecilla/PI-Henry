@@ -20,8 +20,8 @@ function SearchBar(props) {
   };
 
   React.useEffect(() => {
-    dispatch(actions.filterByType1(select1, select2));
-  }, [select1, select2]);
+    dispatch(actions.filterByType1(select1, select2, procedence));
+  }, [select1, select2, procedence]);
 
   // const handleSelect1 = function (e) {
   //   console.log(e.target.value);
@@ -127,10 +127,16 @@ function SearchBar(props) {
         <option value="unknown">Unknown</option>
         <option value="shadow">Shadow</option>
       </select>
-      <select className="filters" name="created" onChange={handleProcedence}>
+      <select
+        className="filters"
+        name="created"
+        onChange={(e) => {
+          setProcedence(e.target.value);
+        }}
+      >
         <option value="all">All</option>
         <option value="api">API</option>
-        <option value="database">Database</option>
+        <option value="db">Database</option>
       </select>
       <select className="filters" name="sortName" onChange={handleName}>
         <option value="none">Sort by Name</option>

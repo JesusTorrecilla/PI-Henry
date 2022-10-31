@@ -70,9 +70,9 @@ export const cleanMsg = () => ({ type: CLEAN_MSG });
 
 export const cleanDetail = () => ({ type: CLEAN_DETAIL });
 
-export const filterByType1 = (type1, type2) => ({
+export const filterByType1 = (type1, type2, proc) => ({
   type: FILTER1,
-  payload: [type1, type2],
+  payload: [type1, type2, proc],
 });
 
 export const filterByType2 = (type2) => ({ type: FILTER2, payload: type2 });

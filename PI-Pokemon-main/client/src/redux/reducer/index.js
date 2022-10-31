@@ -108,6 +108,14 @@ const rootReducer = (state = initialState, action) => {
       });
       console.log(filt2);
 
+      let filt3 = filt2.filter((pokemon) => {
+        if (pay[0] === "none" && pay[1] === "none" && pay[2] === "all")
+          return defaultPoke;
+        if (pay[2] === "all") return filt2;
+        return pokemon.created === pay[2];
+      });
+
+      console.log(filt3);
       // const filtered =
       //   action.payload === "none"
       //     ? defaultPoke
@@ -121,12 +129,12 @@ const rootReducer = (state = initialState, action) => {
       //           return pokemon.tipos[0].name === action.payload;
       //         }
       //       });
-      if (filt2.length < 1) {
+      if (filt3.length < 1) {
         message = "Pokemon not Found";
       }
       return {
         ...state,
-        pokemon: filt2,
+        pokemon: filt3,
         errorMsg: message,
       };
     case FILTER2:
