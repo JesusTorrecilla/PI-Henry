@@ -75,8 +75,6 @@ export const filterByType1 = (type1, type2, proc) => ({
   payload: [type1, type2, proc],
 });
 
-export const filterByType2 = (type2) => ({ type: FILTER2, payload: type2 });
-
 export const sortByAttack = (sa) => ({
   type: SORT_BY_ATTACK,
   payload: sa,
@@ -85,9 +83,4 @@ export const sortByAttack = (sa) => ({
 export const sortByName = (sn) => ({
   type: SORT_BY_NAME,
   payload: sn,
-});
-
-export const filterByProcedence = (proc) => ({
-  type: FILTER_BY_PROCEDENCE,
-  payload: proc,
 });

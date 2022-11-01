@@ -6,11 +6,8 @@ import * as actions from "../../redux/actions/index";
 
 function SearchBar(props) {
   let [inputSB, setInputSB] = useState("");
-
   let [select1, setSelect1] = useState("none");
   let [select2, setSelect2] = useState("none");
-  let [attack, setAttack] = useState("none");
-  let [name, setName] = useState("none");
   let [procedence, setProcedence] = useState("all");
 
   let dispatch = useDispatch();
@@ -23,30 +20,14 @@ function SearchBar(props) {
     dispatch(actions.filterByType1(select1, select2, procedence));
   }, [select1, select2, procedence]);
 
-  // const handleSelect1 = function (e) {
-  //   console.log(e.target.value);
-  //   dispatch(actions.filterByType1([select1, select2]));
-  // };
-
-  const handleSelect2 = function (e) {
-    e.preventDefault();
-    dispatch(actions.filterByType2(e.target.value));
-  };
-
   const handleAttack = function (e) {
     e.preventDefault();
-    // setAttack(e.target.value);
     dispatch(actions.sortByAttack(e.target.value));
   };
 
   const handleName = function (e) {
     e.preventDefault();
     dispatch(actions.sortByName(e.target.value));
-  };
-
-  const handleProcedence = function (e) {
-    e.preventDefault();
-    dispatch(actions.filterByProcedence(e.target.value));
   };
 
   return (
@@ -72,7 +53,6 @@ function SearchBar(props) {
         name="type1"
         onChange={(e) => {
           setSelect1(e.target.value);
-          // handleSelect1(e);
         }}
       >
         <option value="none">Filter by Type1</option>
@@ -102,7 +82,6 @@ function SearchBar(props) {
         name="type2"
         onChange={(e) => {
           setSelect2(e.target.value);
-          // handleSelect1();
         }}
       >
         <option value="none">Filter by Type2</option>

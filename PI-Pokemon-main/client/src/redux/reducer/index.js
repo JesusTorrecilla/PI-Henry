@@ -9,8 +9,6 @@ import {
   CHANGE_MSG,
   CLEAN_DETAIL,
   FILTER1,
-  FILTER2,
-  FILTER_BY_PROCEDENCE,
   SORT_BY_ATTACK,
   SORT_BY_NAME,
 } from "../actions/index.js";
@@ -79,10 +77,7 @@ const rootReducer = (state = initialState, action) => {
     case FILTER1:
       const defaultPoke = state.allPokemon;
       let message = "";
-
-      let filtered = [];
       let pay = action.payload;
-      console.log(pay[0], pay[1]);
 
       let filt1 = defaultPoke.filter((pokemon) => {
         if (pay[0] === "none") return defaultPoke;
@@ -106,7 +101,6 @@ const rootReducer = (state = initialState, action) => {
           return pokemon.tipos[0].name === pay[0];
         }
       });
-      console.log(filt2);
 
       let filt3 = filt2.filter((pokemon) => {
         if (pay[0] === "none" && pay[1] === "none" && pay[2] === "all")
@@ -115,20 +109,6 @@ const rootReducer = (state = initialState, action) => {
         return pokemon.created === pay[2];
       });
 
-      console.log(filt3);
-      // const filtered =
-      //   action.payload === "none"
-      //     ? defaultPoke
-      //     : defaultPoke.filter((pokemon) => {
-      //         if (pokemon.tipos[1]) {
-      //           return (
-      //             pokemon.tipos[0].name === action.payload ||
-      //             pokemon.tipos[1].name === action.payload
-      //           );
-      //         } else {
-      //           return pokemon.tipos[0].name === action.payload;
-      //         }
-      //       });
       if (filt3.length < 1) {
         message = "Pokemon not Found";
       }
@@ -136,32 +116,6 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         pokemon: filt3,
         errorMsg: message,
-      };
-    case FILTER2:
-      const defaultPoke2 = state.pokemon;
-      let message2 = "";
-      console.log(defaultPoke2, action.payload);
-      const filtered2 =
-        action.payload === "none"
-          ? defaultPoke2
-          : defaultPoke2.filter((pokemon) => {
-              if (pokemon.tipos[1]) {
-                return (
-                  pokemon.tipos[0].name === action.payload ||
-                  pokemon.tipos[1].name === action.payload
-                );
-              } else {
-                return pokemon.tipos[0].name === action.payload;
-              }
-            });
-      console.log(filtered2);
-      if (filtered2.length < 1) {
-        message2 = "Pokemon not Found";
-      }
-      return {
-        ...state,
-        pokemon: filtered2,
-        errorMsg: message2,
       };
     case SORT_BY_ATTACK:
       const defaultPoke3 = state.pokemon;
@@ -194,20 +148,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         pokemon: sortByName,
-      };
-    case FILTER_BY_PROCEDENCE:
-      const defaultPoke5 = state.pokemon;
-      const filterByProc =
-        action.payload === "all"
-          ? state.allPokemon
-          : action.payload === "api"
-          ? defaultPoke5.filter((poke) => poke.created === "api")
-          : action.payload === "database"
-          ? defaultPoke5.filter((poke) => poke.created === "db")
-          : null;
-      return {
-        ...state,
-        pokemon: filterByProc,
       };
     default:
       return state;
