@@ -4,11 +4,12 @@ import { useDispatch } from "react-redux";
 import "./SearchBar.css";
 import * as actions from "../../redux/actions/index";
 
-function SearchBar(props) {
+function SearchBar({ pagination }) {
   let [inputSB, setInputSB] = useState("");
   let [select1, setSelect1] = useState("none");
   let [select2, setSelect2] = useState("none");
   let [procedence, setProcedence] = useState("all");
+  let [order, setOrder] = useState("");
 
   let dispatch = useDispatch();
 
@@ -17,17 +18,27 @@ function SearchBar(props) {
   };
 
   React.useEffect(() => {
+    console.log(order);
+    pagination(1);
+  }, [order]);
+
+  React.useEffect(() => {
+    pagination(1);
     dispatch(actions.filterByType1(select1, select2, procedence));
   }, [select1, select2, procedence]);
 
   const handleAttack = function (e) {
     e.preventDefault();
     dispatch(actions.sortByAttack(e.target.value));
+    pagination(1);
+    setOrder(`Ordered: ${e.target.value}`);
   };
 
   const handleName = function (e) {
     e.preventDefault();
     dispatch(actions.sortByName(e.target.value));
+    pagination(1);
+    setOrder(`Ordered: ${e.target.value}`);
   };
 
   return (
@@ -42,6 +53,7 @@ function SearchBar(props) {
       <button
         id="searchButton"
         onClick={() => {
+          pagination(1);
           dispatch(actions.cleanMsg());
           dispatch(actions.getPokemonByName(inputSB.toLowerCase()));
         }}
@@ -117,12 +129,12 @@ function SearchBar(props) {
         <option value="api">API</option>
         <option value="db">Database</option>
       </select>
-      <select className="filters" name="sortName" onChange={handleName}>
+      <select className="filters" onChange={(e) => handleName(e)}>
         <option value="none">Sort by Name</option>
         <option value="asc">Asc</option>
         <option value="desc">Desc</option>
       </select>
-      <select className="filters" name="sortAttack" onChange={handleAttack}>
+      <select className="filters" onChange={(e) => handleAttack(e)}>
         <option value="none">Sort by Attack</option>
         <option value="asc1">Asc</option>
         <option value="desc2">Desc</option>

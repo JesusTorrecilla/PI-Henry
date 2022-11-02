@@ -91,14 +91,14 @@ const rootReducer = (state = initialState, action) => {
       });
 
       let filt2 = filt1.filter((pokemon) => {
-        if (pay[0] === "none" && pay[1] === "none") return defaultPoke;
+        if (pay[0] === "none" && pay[1] === "none") return filt1;
         if (pay[1] === "none") return filt1;
         if (pokemon.tipos[1]) {
           return (
             pokemon.tipos[0].name === pay[1] || pokemon.tipos[1].name === pay[1]
           );
         } else {
-          return pokemon.tipos[0].name === pay[0];
+          return pokemon.tipos[0].name === pay[1];
         }
       });
 
@@ -118,10 +118,10 @@ const rootReducer = (state = initialState, action) => {
         errorMsg: message,
       };
     case SORT_BY_ATTACK:
-      const defaultPoke3 = state.pokemon;
-      const sortByAttack =
+      const defaultPoke3 = state.allPokemon;
+      let sortByAttack =
         action.payload === "none"
-          ? defaultPoke3
+          ? state.allPokemon
           : action.payload === "asc1"
           ? defaultPoke3.sort(function (a, b) {
               return b.attack - a.attack;
@@ -135,11 +135,12 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         pokemon: sortByAttack,
       };
+    ////ARRAID
     case SORT_BY_NAME:
-      const defaultPoke4 = state.pokemon;
-      const sortByName =
+      const defaultPoke4 = state.allPokemon;
+      let sortByName =
         action.payload === "none"
-          ? defaultPoke4
+          ? state.allPokemon
           : action.payload === "asc"
           ? defaultPoke4.sort((a, b) => a.name.localeCompare(b.name))
           : action.payload === "desc"

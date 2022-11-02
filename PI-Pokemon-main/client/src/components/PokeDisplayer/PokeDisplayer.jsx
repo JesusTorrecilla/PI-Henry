@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../../redux/actions/index.js";
 import PokeCard from "../PokeCard/PokeCard";
+import SearchBar from "../SearchBar/SearchBar.jsx";
 import "./PokeDisplayer.css";
 
 function PokeDisplayer(props) {
@@ -9,11 +10,31 @@ function PokeDisplayer(props) {
   let pokemon = useSelector((state) => state.pokemon);
   let errorMsg = useSelector((state) => state.errorMsg);
   const [value, setValue] = React.useState({ value1: 0, value2: 12 });
+  let pageNumbers = [];
+  let [currentPage, setCurrentPage] = React.useState(1);
+  let indexOfLastCharacter = currentPage * 12;
+  let indexOfFirstCharacter = indexOfLastCharacter - 12;
+  let currentCharacters = pokemon.slice(
+    indexOfFirstCharacter,
+    indexOfLastCharacter
+  );
+
+  for (let i = 0; i < Math.ceil(pokemon.length / 12); i++) {
+    pageNumbers.push(i);
+  }
+
+  console.log(pokemon);
 
   React.useEffect(() => {
     dispatch(actions.getTypes());
     dispatch(actions.getAllPokemon());
   }, []);
+
+  let pagination = (number) => {
+    setCurrentPage(number);
+  };
+
+  /////JONATAN
 
   let { value1, value2 } = value;
 
@@ -33,9 +54,23 @@ function PokeDisplayer(props) {
 
   return (
     <>
+      <SearchBar pagination={pagination}></SearchBar>
       <div>
-        {pokemon &&
-          pokemon.slice(value1, value2).map((pokemon) => {
+        {pokemon.lenght < 6 ? setCurrentPage(1) : null}
+        {pageNumbers.length > 0 &&
+          pageNumbers.map((number) => (
+            <button
+              className="buttonsBot"
+              onClick={() => pagination(number + 1)}
+              key={number}
+            >
+              {number + 1}
+            </button>
+          ))}
+      </div>
+      <div>
+        {currentCharacters &&
+          currentCharacters.map((pokemon) => {
             return (
               <PokeCard
                 key={pokemon.id}
@@ -64,14 +99,15 @@ function PokeDisplayer(props) {
             <p id="loadingText">Loading...</p>
           </div>
         ) : (
-          <div id="buttons">
-            <button className="buttonsBot" onClick={handlePrev}>
-              Prev
-            </button>
-            <button className="buttonsBot" onClick={handleNext}>
-              Next
-            </button>
-          </div>
+          <></>
+          // <div id="buttons">
+          //   <button className="buttonsBot" onClick={handlePrev}>
+          //     Prev
+          //   </button>
+          //   <button className="buttonsBot" onClick={handleNext}>
+          //     Next
+          //   </button>
+          // </div>
         )}
       </div>
     </>

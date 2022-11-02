@@ -18,7 +18,7 @@ function Home(props) {
   return (
     <div>
       <Nav></Nav>
-      <SearchBar />
+      {/* <SearchBar /> */}
       <PokeDisplayer></PokeDisplayer>
     </div>
   );
