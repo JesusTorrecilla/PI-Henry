@@ -25,3 +25,8 @@
   display: flex;
   justify-content: center;
 }
+
+#pagButtons {
+  display: flex;
+  justify-content: center;
+}

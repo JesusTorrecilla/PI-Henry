@@ -4,23 +4,17 @@ import { useDispatch } from "react-redux";
 import "./SearchBar.css";
 import * as actions from "../../redux/actions/index";
 
-function SearchBar({ pagination }) {
+function SearchBar({ pagination, setOrder }) {
   let [inputSB, setInputSB] = useState("");
   let [select1, setSelect1] = useState("none");
   let [select2, setSelect2] = useState("none");
   let [procedence, setProcedence] = useState("all");
-  let [order, setOrder] = useState("");
 
   let dispatch = useDispatch();
 
   const handleInputChange = function (e) {
     setInputSB(e.target.value);
   };
-
-  React.useEffect(() => {
-    console.log(order);
-    pagination(1);
-  }, [order]);
 
   React.useEffect(() => {
     pagination(1);
@@ -31,14 +25,14 @@ function SearchBar({ pagination }) {
     e.preventDefault();
     dispatch(actions.sortByAttack(e.target.value));
     pagination(1);
-    setOrder(`Ordered: ${e.target.value}`);
+    setOrder(e.target.value);
   };
 
   const handleName = function (e) {
     e.preventDefault();
     dispatch(actions.sortByName(e.target.value));
     pagination(1);
-    setOrder(`Ordered: ${e.target.value}`);
+    setOrder(e.target.value);
   };
 
   return (

@@ -8,6 +8,7 @@ import "./PokeDisplayer.css";
 function PokeDisplayer(props) {
   let dispatch = useDispatch();
   let pokemon = useSelector((state) => state.pokemon);
+  let types = useSelector((state) => state.types);
   let errorMsg = useSelector((state) => state.errorMsg);
   const [value, setValue] = React.useState({ value1: 0, value2: 12 });
   let pageNumbers = [];
@@ -18,6 +19,7 @@ function PokeDisplayer(props) {
     indexOfFirstCharacter,
     indexOfLastCharacter
   );
+  const [order, setOrder] = React.useState("");
 
   for (let i = 0; i < Math.ceil(pokemon.length / 12); i++) {
     pageNumbers.push(i);
@@ -26,8 +28,12 @@ function PokeDisplayer(props) {
   console.log(pokemon);
 
   React.useEffect(() => {
-    dispatch(actions.getTypes());
-    dispatch(actions.getAllPokemon());
+    if (types.length < 1) {
+      dispatch(actions.getTypes());
+    }
+    if (pokemon.length < 1) {
+      dispatch(actions.getAllPokemon());
+    }
   }, []);
 
   let pagination = (number) => {
@@ -36,26 +42,26 @@ function PokeDisplayer(props) {
 
   /////JONATAN
 
-  let { value1, value2 } = value;
+  // let { value1, value2 } = value;
 
-  let handleNext = () => {
-    const val1 = value1 >= pokemon.length - 12 ? (value1 = 0) : value1 + 12;
-    const val2 = value2 >= pokemon.length ? (value2 = 12) : value2 + 12;
-    setValue({ ...value, value1: val1, value2: val2 });
-  };
+  // let handleNext = () => {
+  //   const val1 = value1 >= pokemon.length - 12 ? (value1 = 0) : value1 + 12;
+  //   const val2 = value2 >= pokemon.length ? (value2 = 12) : value2 + 12;
+  //   setValue({ ...value, value1: val1, value2: val2 });
+  // };
 
-  let handlePrev = () => {
-    let val1 = value1 <= 0 ? pokemon.length - 12 : value1 - 12;
-    let val2 = value2 <= 12 ? pokemon.length : value2 - 12;
-    // Si val1 es igual o menor a 0 lo igual a 0 para que no me deje pantalla en blanco porque si no slice no sabe que cortar
-    if (val1 <= 0) val1 = 0;
-    setValue({ ...value, value1: val1, value2: val2 });
-  };
+  // let handlePrev = () => {
+  //   let val1 = value1 <= 0 ? pokemon.length - 12 : value1 - 12;
+  //   let val2 = value2 <= 12 ? pokemon.length : value2 - 12;
+  //   // Si val1 es igual o menor a 0 lo igual a 0 para que no me deje pantalla en blanco porque si no slice no sabe que cortar
+  //   if (val1 <= 0) val1 = 0;
+  //   setValue({ ...value, value1: val1, value2: val2 });
+  // };
 
   return (
     <>
-      <SearchBar pagination={pagination}></SearchBar>
-      <div>
+      <SearchBar pagination={pagination} setOrder={setOrder}></SearchBar>
+      <div id="pagButtons">
         {pokemon.lenght < 6 ? setCurrentPage(1) : null}
         {pageNumbers.length > 0 &&
           pageNumbers.map((number) => (

@@ -98,7 +98,11 @@ router.get("/pokemons", async function (req, res) {
           weight: pokemito3[0].dataValues.weight || "Not specified",
           tipos: [
             { name: pokemito3[0].dataValues.tipos[0].name },
-            { name: pokemito3[0].dataValues.tipos[1].name },
+            {
+              name: pokemito3[0].dataValues.tipos[1]
+                ? pokemito3[0].dataValues.tipos[1].name
+                : "",
+            },
           ],
         });
       } catch (error) {

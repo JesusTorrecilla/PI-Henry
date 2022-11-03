@@ -119,15 +119,18 @@ const rootReducer = (state = initialState, action) => {
       };
     case SORT_BY_ATTACK:
       const defaultPoke3 = state.allPokemon;
+      const defaultPoke5 = state.pokemon;
       let sortByAttack =
         action.payload === "none"
-          ? state.allPokemon
+          ? state.pokemon.sort(function (a, b) {
+              return a.id - b.id;
+            })
           : action.payload === "asc1"
-          ? defaultPoke3.sort(function (a, b) {
+          ? state.pokemon.sort(function (a, b) {
               return b.attack - a.attack;
             })
           : action.payload === "desc2"
-          ? defaultPoke3.sort(function (a, b) {
+          ? state.pokemon.sort(function (a, b) {
               return a.attack - b.attack;
             })
           : null;
@@ -135,16 +138,18 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         pokemon: sortByAttack,
       };
-    ////ARRAID
     case SORT_BY_NAME:
       const defaultPoke4 = state.allPokemon;
+      console.log(action.payload);
       let sortByName =
         action.payload === "none"
-          ? state.allPokemon
+          ? state.pokemon.sort(function (a, b) {
+              return a.id - b.id;
+            })
           : action.payload === "asc"
-          ? defaultPoke4.sort((a, b) => a.name.localeCompare(b.name))
+          ? state.pokemon.sort((a, b) => a.name.localeCompare(b.name))
           : action.payload === "desc"
-          ? defaultPoke4.sort((a, b) => b.name.localeCompare(a.name))
+          ? state.pokemon.sort((a, b) => b.name.localeCompare(a.name))
           : null;
       return {
         ...state,
