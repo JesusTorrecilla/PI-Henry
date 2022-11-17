@@ -11,6 +11,7 @@ import {
   FILTER1,
   SORT_BY_ATTACK,
   SORT_BY_NAME,
+  LOOK_BY_NAME,
 } from "../actions/index.js";
 
 const initialState = {
@@ -154,6 +155,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         pokemon: sortByName,
+      };
+    case LOOK_BY_NAME:
+      return {
+        ...state,
+        pokemon: state.pokemon.filter((e) => e.attack >= action.payload),
       };
     default:
       return state;

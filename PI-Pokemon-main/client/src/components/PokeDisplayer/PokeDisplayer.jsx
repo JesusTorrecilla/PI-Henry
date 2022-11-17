@@ -25,38 +25,30 @@ function PokeDisplayer(props) {
     pageNumbers.push(i);
   }
 
-  console.log(pokemon);
-
   React.useEffect(() => {
-    if (types.length < 1) {
-      dispatch(actions.getTypes());
-    }
-    if (pokemon.length < 1) {
-      dispatch(actions.getAllPokemon());
-    }
+    dispatch(actions.getTypes());
+    dispatch(actions.getAllPokemon());
   }, []);
 
   let pagination = (number) => {
     setCurrentPage(number);
   };
 
-  /////JONATAN
+  let handleNext = () => {
+    if (currentPage === Math.ceil(pokemon.length / 12)) {
+      pagination(1);
+    } else {
+      pagination(currentPage + 1);
+    }
+  };
 
-  // let { value1, value2 } = value;
-
-  // let handleNext = () => {
-  //   const val1 = value1 >= pokemon.length - 12 ? (value1 = 0) : value1 + 12;
-  //   const val2 = value2 >= pokemon.length ? (value2 = 12) : value2 + 12;
-  //   setValue({ ...value, value1: val1, value2: val2 });
-  // };
-
-  // let handlePrev = () => {
-  //   let val1 = value1 <= 0 ? pokemon.length - 12 : value1 - 12;
-  //   let val2 = value2 <= 12 ? pokemon.length : value2 - 12;
-  //   // Si val1 es igual o menor a 0 lo igual a 0 para que no me deje pantalla en blanco porque si no slice no sabe que cortar
-  //   if (val1 <= 0) val1 = 0;
-  //   setValue({ ...value, value1: val1, value2: val2 });
-  // };
+  let handlePrev = () => {
+    if (currentPage === 1) {
+      pagination(Math.ceil(pokemon.length / 12));
+    } else {
+      pagination(currentPage - 1);
+    }
+  };
 
   return (
     <>
@@ -66,7 +58,9 @@ function PokeDisplayer(props) {
         {pageNumbers.length > 0 &&
           pageNumbers.map((number) => (
             <button
-              className="buttonsBot"
+              className={
+                currentPage === number + 1 ? "text-success" : "buttonsBot"
+              }
               onClick={() => pagination(number + 1)}
               key={number}
             >
@@ -74,7 +68,7 @@ function PokeDisplayer(props) {
             </button>
           ))}
       </div>
-      <div>
+      <div className="pokeDisp">
         {currentCharacters &&
           currentCharacters.map((pokemon) => {
             return (
@@ -89,7 +83,9 @@ function PokeDisplayer(props) {
                 speed={pokemon.speed}
                 height={pokemon.height}
                 weight={pokemon.weight}
-                type1={pokemon.tipos[0].name}
+                type1={
+                  pokemon.tipos && pokemon.tipos[0] ? pokemon.tipos[0].name : ""
+                }
                 type2={
                   pokemon.tipos && pokemon.tipos[1] ? pokemon.tipos[1].name : ""
                 }
@@ -105,22 +101,18 @@ function PokeDisplayer(props) {
             <p id="loadingText">Loading...</p>
           </div>
         ) : (
-          <></>
-          // <div id="buttons">
-          //   <button className="buttonsBot" onClick={handlePrev}>
-          //     Prev
-          //   </button>
-          //   <button className="buttonsBot" onClick={handleNext}>
-          //     Next
-          //   </button>
-          // </div>
+          <div id="buttons">
+            <button className="buttonsBot" onClick={handlePrev}>
+              Prev
+            </button>
+            <button className="buttonsBot" onClick={handleNext}>
+              Next
+            </button>
+          </div>
         )}
       </div>
     </>
   );
 }
-
-//////////////asdjknfaksbfdakhbdHJSABJDFAJSHBDFJHASHDBFAJSBFJHASJHBFSAD
-//////ASKDBASJHBDAHJSBDJAHBSDJAS
 
 export default PokeDisplayer;

@@ -14,6 +14,7 @@ export const FILTER2 = "FILTER2";
 export const FILTER_BY_PROCEDENCE = "FILTER_BY_PROCEDENCE";
 export const SORT_BY_ATTACK = "SORT_BY_ATTACK";
 export const SORT_BY_NAME = "SORT_BY_NAME";
+export const LOOK_BY_NAME = "LOOK_BY_NAME";
 
 export const getAllPokemon = () => {
   return async function (dispatch) {
@@ -31,7 +32,8 @@ export const getPokemonById = (id) => {
 
 export const getPokemonByName = (name) => {
   return async function (dispatch) {
-    if (name === "") {
+    let alterName = name.replace(/ /g, "");
+    if (name === "" || alterName === "") {
       const pokemon = await axios.get("http://localhost:3001/pokemons");
       return dispatch({ type: GET_ALL_POKEMON, payload: pokemon.data });
     }
@@ -83,4 +85,9 @@ export const sortByAttack = (sa) => ({
 export const sortByName = (sn) => ({
   type: SORT_BY_NAME,
   payload: sn,
+});
+
+export const lookByName = (attack) => ({
+  type: LOOK_BY_NAME,
+  payload: attack,
 });

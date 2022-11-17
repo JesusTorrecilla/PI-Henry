@@ -20,7 +20,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 50%;
+  width: 40%;
   height: 1000px;
   border: 1px solid rgba(236, 56, 24, 0.998);
   border-radius: 20px;
@@ -29,7 +29,6 @@
 
 .labels {
   margin: 1vh;
-  width: 40%;
   font-size: 25px;
   position: relative;
 }
@@ -47,6 +46,8 @@
   top: 52px;
   font-size: 15px;
   height: 10px;
+  color: rgba(255, 38, 0, 0.998);
+  font-weight: bold;
 }
 
 .dangerSel {

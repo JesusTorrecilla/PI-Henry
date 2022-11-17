@@ -19,6 +19,12 @@ export function validate(input) {
       "In name, the first letter must be capital and must have more than one letter ";
   }
 
+  if (!input.sprite) {
+    errors.sprite = false;
+  } else if (!/\S+.png/g.test(input.sprite)) {
+    errors.sprite = "Sprite must be a valid link and must be png";
+  }
+
   if (!input.hp) {
     errors.hp = false;
   } else if (isNaN(Number(input.hp))) {
@@ -92,8 +98,13 @@ function CreatePoke(props) {
 
   let msg = useSelector((state) => state.msg);
 
+  React.useEffect(() => {
+    dispatch(actions.getTypes());
+  }, []);
+
   const [input, setInput] = React.useState({
     name: "",
+    sprite: "",
     hp: "",
     attack: "",
     defense: "",
@@ -153,6 +164,18 @@ function CreatePoke(props) {
                 onChange={handleInputChange}
               />
               {errors.name && <p className="danger">{errors.name}</p>}
+            </div>
+            <div className="labels">
+              <label>Sprite:</label>
+              <br></br>
+              <input
+                id="inputsName"
+                type="text"
+                value={input.sprite}
+                name="sprite"
+                onChange={handleInputChange}
+              />
+              {errors.sprite && <p className="danger">{errors.sprite}</p>}
             </div>
             <div className="labels">
               <label>HP:</label>
@@ -252,8 +275,8 @@ function CreatePoke(props) {
                 <option value="16">Dragon</option>
                 <option value="17">Dark</option>
                 <option value="18">Fairy</option>
-                <option value="10001">Unknown</option>
-                <option value="10002">Shadow</option>
+                <option value="19">Unknown</option>
+                <option value="20">Shadow</option>
               </select>
             </div>
             <div className="labels">
@@ -283,8 +306,8 @@ function CreatePoke(props) {
                 <option value="16">Dragon</option>
                 <option value="17">Dark</option>
                 <option value="18">Fairy</option>
-                <option value="10001">Unknown</option>
-                <option value="10002">Shadow</option>
+                <option value="19">Unknown</option>
+                <option value="20">Shadow</option>
               </select>
               {errors.type && <p className="dangerSel">{errors.type}</p>}
             </div>
@@ -298,6 +321,7 @@ function CreatePoke(props) {
                   disabled
                 />
               ) : errors.name ||
+                errors.sprite ||
                 errors.hp ||
                 errors.attack ||
                 errors.defense ||
