@@ -121,7 +121,7 @@ router.get("/pokemons/:id", async function (req, res) {
         where: { id: id },
         include: Tipo,
       });
-      console.log(pokemito3);
+
       res.status(200).json({
         name: pokemito3.dataValues.name,
         id: pokemito3.dataValues.id,
@@ -184,6 +184,7 @@ router.post("/pokemons", async function (req, res) {
   const {
     id,
     name,
+    sprite,
     hp,
     attack,
     defense,
@@ -193,6 +194,8 @@ router.post("/pokemons", async function (req, res) {
     typesId1,
     typesId2,
   } = req.body;
+
+  console.log(sprite);
 
   if (!name) {
     return res.status(404).send("You must be send a name");
@@ -211,6 +214,9 @@ router.post("/pokemons", async function (req, res) {
   try {
     const newPoke = await Pokemon.create({
       name: name.toLowerCase(),
+      sprite:
+        String(sprite) ||
+        "https://i.pinimg.com/550x/dd/20/84/dd208480c6937eb68a91f73df5ca904a.jpg",
       hp: hp || 500,
       attack: attack || 25,
       defense: defense || 25,

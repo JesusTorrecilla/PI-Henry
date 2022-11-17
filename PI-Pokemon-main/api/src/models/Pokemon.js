@@ -19,7 +19,7 @@ module.exports = (sequelize) => {
       sprite: {
         type: DataTypes.STRING,
         defaultValue:
-          "https://cdn.discordapp.com/emojis/891059618208444437.webp?size=96&quality=lossless",
+          "https://i.pinimg.com/550x/dd/20/84/dd208480c6937eb68a91f73df5ca904a.jpg",
       },
       hp: {
         type: DataTypes.INTEGER,
